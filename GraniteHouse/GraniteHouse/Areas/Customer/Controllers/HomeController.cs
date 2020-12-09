@@ -24,24 +24,13 @@ namespace GraniteHouse.Controllers
             return View(productList);
         }
 
-        public IActionResult About()
+        public async Task<IActionResult> Details(int id)
         {
-            ViewData["Message"] = "Your application description page.";
-
-            return View();
+            var product = await _db.Products.Include(m => m.ProductTypes).Include(m => m.SpecialTags).Where(m => m.Id == id).FirstOrDefaultAsync();
+            return View(product);
         }
 
-        public IActionResult Contact()
-        {
-            ViewData["Message"] = "Your contact page.";
-
-            return View();
-        }
-
-        public IActionResult Privacy()
-        {
-            return View();
-        }
+     
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         public IActionResult Error()
